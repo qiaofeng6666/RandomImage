@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html style="height: 100%;">
+<head>
+<meta charset="utf-8">
+<title>charming legs</title>
+<style>
+html, body,img{
+            height: 100%;
+            margin: 0; /* 移除默认的margin */
+        }
+</style>
+<script>
+var xhr = new XMLHttpRequest();
+xhr.onload = function () {
+    // 输出接收到的文字数据
+    document.getElementById("myImg").src=xhr.responseText;
+}
+xhr.onerror = function () {}
+function changeSrc(){
+	document.getElementById("myImg").src=xhr.responseText;
+	// 发送异步 GET 请求
+	xhr.open("GET", "https://api.suyanw.cn/api/meitui.php", true);
+	xhr.send();
+	
+}
+// 发送异步 GET 请求
+xhr.open("GET", "https://api.suyanw.cn/api/meitui.php", true);
+xhr.send();
+</script>
+</head>
+<body id="myElement" onclick="changeSrc()" style="margin: 0px; height: 100%; background-color: rgb(14, 14, 14);">
+<img  id="myImg" style="display: block;-webkit-user-select: none;margin: auto;background-color: hsl(0, 0%, 90%);transition: background-color 300ms;">
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Click Outside Image to Update and Click Image to Zoom</title>
+<style>
+    body, html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        overflow: hidden; /* 防止默认滚动条 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #fff8e1; /* 设置背景颜色 */
+    }
+    #myImg {
+        cursor: zoom-in;
+        height: 100%;
+        transition: transform 300ms; /* 平滑过渡效果 */
+    }
+    .zoomed {
+        transform: scale(1.5); /* 放大1.5倍 */
+    }
+    #instructions {
+        text-align: center;
+        font-size: 16px;
+        position: absolute;
+        bottom: 20px;
+        width: 100%;
+    }
+</style>
+</head>
+<script>
+
+</script>
+<body>
+
+<img id="myImg" alt="Click Image to Zoom or Outside to Update">
+<div id="instructions">点击图片以放大/缩小，点击图片外以更新图片</div>
+
+<script>
+var xhr = new XMLHttpRequest();
+xhr.onload = function () {
+    // 输出接收到的文字数据
+    document.getElementById("myImg").src=xhr.responseText;
+}
+
+xhr.onerror = function () {}
+function changeSrc(){
+	document.getElementById("myImg").src=xhr.responseText;
+	// 发送异步 GET 请求
+	xhr.open("GET", "https://api.suyanw.cn/api/meitui.php", true);
+	xhr.send();
+	
+}
+
+// 获取图片元素
+const img = document.getElementById('myImg');
+
+// 点击图片放大或缩小
+img.addEventListener('click', function(event) {
+    event.stopPropagation(); // 阻止事件冒泡到document
+    this.classList.toggle('zoomed');
+});
+
+// 监听整个文档的点击事件
+document.addEventListener('click', function(event) {
+    const targetElement = event.target;
+
+    // 如果点击的目标不是图片，则更新图片
+    if (targetElement !== img) {
+	document.getElementById("myImg").src=xhr.responseText;
+	// 发送异步 GET 请求
+	xhr.open("GET", "https://api.suyanw.cn/api/meitui.php", true);
+	xhr.send();
+    }
+});
+
+
+
+// 发送异步 GET 请求
+xhr.open("GET", "https://api.suyanw.cn/api/meitui.php", true);
+xhr.send();
+</script>
+
+</body>
+</html>
